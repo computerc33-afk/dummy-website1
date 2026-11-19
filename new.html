@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Daily Grind & Bite | Campus & Office Cafeteria</title>
+    <style>
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #faf8f5;
+            color: #2c241e;
+            line-height: 1.6;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            background-color: #2c241e;
+            color: #fff;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #f4a261;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #f4a261;
+        }
+
+        .cart-btn {
+            background-color: #e76f51;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .cart-btn:hover {
+            background-color: #d65a3c;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(44, 36, 30, 0.75), rgba(44, 36, 30, 0.75)),
+                        url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1350&q=80') center/cover;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 0 20px;
+        }
+
+        .hero-content h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            max-width: 600px;
+            margin-inline: auto;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background-color: #f4a261;
+            color: #2c241e;
+            padding: 0.8rem 1.8rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-primary:hover {
+            background-color: #e98b3e;
+        }
+
+        /* Menu Section */
+        .menu-section {
+            padding: 4rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .menu-section h2 {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1.2rem;
+            border: 2px solid #2c241e;
+            background: transparent;
+            color: #2c241e;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background-color: #2c241e;
+            color: #fff;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .menu-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-emoji {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .menu-card h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .menu-card p {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 1.2rem;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #eee;
+            padding-top: 1rem;
+        }
+
+        .price {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #2a9d8f;
+        }
+
+        .add-btn {
+            background-color: #2a9d8f;
+            color: white;
+            border: none;
+            padding: 0.4rem 0.9rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .add-btn:hover {
+            background-color: #21867a;
+        }
+
+        /* Info Section */
+        .info-section {
+            background-color: #efeae4;
+            padding: 3rem 5%;
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .info-box {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            min-width: 280px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .info-box h3 {
+            margin-bottom: 1rem;
+            color: #e76f51;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: #2c241e;
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+
+        /* Cart Modal */
+        .cart-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: flex-end;
+            z-index: 200;
+        }
+
+        .cart-content {
+            background: white;
+            width: 350px;
+            max-width: 90%;
+            height: 100%;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 1rem;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+        }
+
+        .cart-items {
+            list-style: none;
+            flex-grow: 1;
+            overflow-y: auto;
+            margin: 1rem 0;
+        }
+
+        .cart-items li {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .cart-total {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            text-align: right;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">☕ The Daily Grind & Bite</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#about">Hours & Location</a></li>
+            </ul>
+            <button id="cart-btn" class="cart-btn">🛒 Tray (<span id="cart-count">0</span>)</button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Fresh Food, Fast Service, Zero Hassle.</h1>
+            <p>Fueling your workday with locally roasted coffee, hearty lunches, and fresh-baked pastries.</p>
+            <a href="#menu" class="btn-primary">Explore Today's Menu</a>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="menu-section">
+        <h2>Today's Menu</h2>
+        
+        <!-- Category Filters -->
+        <div class="filter-buttons">
+            <button class="filter-btn active" onclick="filterMenu('all', this)">All</button>
+            <button class="filter-btn" onclick="filterMenu('breakfast', this)">Breakfast</button>
+            <button class="filter-btn" onclick="filterMenu('lunch', this)">Lunch</button>
+            <button class="filter-btn" onclick="filterMenu('drinks', this)">Drinks & Bakery</button>
+        </div>
+
+        <!-- Menu Grid -->
+        <div class="menu-grid" id="menu-grid">
+            <!-- Item 1 -->
+            <div class="menu-card" data-category="breakfast">
+                <div class="card-emoji">🥑</div>
+                <h3>Avocado & Egg Toast</h3>
+                <p>Sourdough bread, smashed avocado, poached egg, and chili flakes.</p>
+                <div class="card-footer">
+                    <span class="price">$6.50</span>
+                    <button class="add-btn" onclick="addToCart('Avocado & Egg Toast', 6.50)">+ Add</button>
+                </div>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="menu-card" data-category="breakfast">
+                <div class="card-emoji">🥞</div>
+                <h3>Classic Pancake Stack</h3>
+                <p>Three fluffy buttermilk pancakes served with maple syrup and berries.</p>
+                <div class="card-footer">
+                    <span class="price">$7.00</span>
+                    <button class="add-btn" onclick="addToCart('Classic Pancake Stack', 7.00)">+ Add</button>
+                </div>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="menu-card" data-category="lunch">
+                <div class="card-emoji">🥪</div>
+                <h3>Grilled Chicken Panini</h3>
+                <p>Herb-marinated chicken, mozzarella, pesto, and roasted peppers.</p>
+                <div class="card-footer">
+                    <span class="price">$8.95</span>
+                    <button class="add-btn" onclick="addToCart('Grilled Chicken Panini', 8.95)">+ Add</button>
+                </div>
+            </div>
+
+            <!-- Item 4 -->
+            <div class="menu-card" data-category="lunch">
+                <div class="card-emoji">🥗</div>
+                <h3>Harvest Quinoa Bowl</h3>
+                <p>Mixed greens, quinoa, roasted sweet potatoes, feta, and lemon vinaigrette.</p>
+                <div class="card-footer">
+                    <span class="price">$8.50</span>
+                    <button class="add-btn" onclick="addToCart('Harvest Quinoa Bowl', 8.50)">+ Add</button>
+                </div>
+            </div>
+
+            <!-- Item 5 -->
+            <div class="menu-card" data-category="drinks">
+                <div class="card-emoji">☕</div>
+                <h3>Iced Caramel Macchiato</h3>
+                <p>Rich espresso poured over cold milk, ice, and vanilla-caramel drizzle.</p>
+                <div class="card-footer">
+                    <span class="price">$4.25</span>
+                    <button class="add-btn" onclick="addToCart('Iced Caramel Macchiato', 4.25)">+ Add</button>
+                </div>
+            </div>
+
+            <!-- Item 6 -->
+            <div class="menu-card" data-category="drinks">
+                <div class="card-emoji">🥐</div>
+                <h3>Butter Croissant</h3>
+                <p>Flaky, golden-brown French pastry baked fresh every morning.</p>
+                <div class="card-footer">
+                    <span class="price">$3.25</span>
+                    <button class="add-btn" onclick="addToCart('Butter Croissant', 3.25)">+ Add</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hours & Location -->
+    <section id="about" class="info-section">
+        <div class="info-box">
+            <h3>🕒 Opening Hours</h3>
+            <p><strong>Monday – Friday:</strong> 7:00 AM – 6:00 PM</p>
+            <p><strong>Saturday:</strong> 8:00 AM – 2:00 PM</p>
+            <p><strong>Sunday:</strong> Closed</p>
+        </div>
+        <div class="info-box">
+            <h3>📍 Location</h3>
+            <p>Building B, Ground Floor Atrium</p>
+            <p>123 Innovation Way, Tech Park</p>
+            <p>📞 (555) 234-5678</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 The Daily Grind & Bite Cafeteria. Dummy Website Template.</p>
+    </footer>
+
+    <!-- Slide-out Cart Modal -->
+    <div id="cart-modal" class="cart-modal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h3>Your Lunch Tray</h3>
+                <button id="close-cart" class="close-btn">&times;</button>
+            </div>
+            <ul id="cart-items" class="cart-items">
+                <!-- Items injected by JS -->
+            </ul>
+            <div class="cart-total">
+                <strong>Total: $<span id="total-price">0.00</span></strong>
+            </div>
+            <button class="btn-primary checkout-btn" onclick="checkout()">Place Pickup Order</button>
+        </div>
+    </div>
+
+    <script>
+        let cart = [];
+
+        // Filter Menu Items by Category
+        function filterMenu(category, clickedBtn) {
+            const cards = document.querySelectorAll('.menu-card');
+            const buttons = document.querySelectorAll('.filter-btn');
+
+            buttons.forEach(btn => btn.classList.remove('active'));
+            clickedBtn.classList.add('active');
+
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Add Item to Cart
+        function addToCart(name, price) {
+            cart.push({ name, price });
+            updateCartUI();
+        }
+
+        // Remove Item from Cart
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        // Update Cart Display
+        function updateCartUI() {
+            const cartCount = document.getElementById('cart-count');
+            const cartItemsList = document.getElementById('cart-items');
+            const totalPriceEl = document.getElementById('total-price');
+
+            cartCount.textContent = cart.length;
+            cartItemsList.innerHTML = '';
+
+            let total = 0;
+
+            if (cart.length === 0) {
+                cartItemsList.innerHTML = '<p style="color:#888; text-align:center; margin-top:2rem;">Your tray is empty.</p>';
+            } else {
+                cart.forEach((item, index) => {
+                    total += item.price;
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+                        <span>${item.name}</span>
+                        <span>$${item.price.toFixed(2)} 
+                            <button onclick="removeFromCart(${index})" style="color:red; border:none; background:none; cursor:pointer; margin-left:8px;">✕</button>
+                        </span>
+                    `;
+                    cartItemsList.appendChild(li);
+                });
+            }
+
+            totalPriceEl.textContent = total.toFixed(2);
+        }
+
+        // Modal Open/Close Controls
+        const cartModal = document.getElementById('cart-modal');
+        document.getElementById('cart-btn').addEventListener('click', () => {
+            cartModal.style.display = 'flex';
+        });
+
+        document.getElementById('close-cart').addEventListener('click', () => {
+            cartModal.style.display = 'none';
+        });
+
+        // Simulated Checkout
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Please add items to your tray before ordering!');
+                return;
+            }
+            alert('Order placed! Your food will be ready for pickup at the counter in 10 minutes.');
+            cart = [];
+            updateCartUI();
+            cartModal.style.display = 'none';
+        }
+
+        // Initialize empty cart view
+        updateCartUI();
+    </script>
+</body>
+</html>
